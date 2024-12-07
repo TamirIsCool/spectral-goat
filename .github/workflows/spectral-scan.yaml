@@ -1,19 +1,18 @@
-name: Spectral scan
+name: Frogbot Scan Repository
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    
-env:
-  SPECTRAL_DSN: ${{ secrets.SPECTRAL_DSN }}
-
+  schedule:
+    - cron: '0 0 * * *'  # Adjust the schedule as needed
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+  security-events: write
 jobs:
-  scan:
+  scan-repository:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Spectral Scan
-      uses: checkpointsw/spectral-github-action@v4
-      with:
-        spectral-dsn: ${{ secrets.SPECTRAL_DSN }}
-        spectral-args: scan --engines secrets,iac,oss
+      - uses: jfrog/frogbot@v2
+        env:
+          JF_URL: ${{ secrets.JF_URL }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+          JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
