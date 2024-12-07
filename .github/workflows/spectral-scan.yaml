@@ -18,13 +18,10 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v4
         with:
           version: 'latest'
-
-      - name: Configure JFrog CLI
-        run: |
-          jf c add --url=$JF_URL --access-token=$JF_ACCESS_TOKEN --interactive=false
-
+          
       - name: Run SAST Scan
         run: |
+          jf c add --url=$JF_URL --access-token=$JF_ACCESS_TOKEN --interactive=false
           jf audit scan --sast
         env:
           JF_URL: ${{ secrets.JF_URL }}
