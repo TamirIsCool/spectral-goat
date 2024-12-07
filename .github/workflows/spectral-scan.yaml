@@ -1,25 +1,30 @@
-name: Frogbot Scan Repository
+name: JFrog SAST Scan
+
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Adjust the schedule as needed
-  workflow_dispatch:
-permissions:
-  contents: write
-  pull-requests: write
-  security-events: write
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
-  scan-repository:
+  sast-scan:
     runs-on: ubuntu-latest
     steps:
-      # Checkout the repository code
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Run Frogbot for scanning
-      - name: Frogbot Security Scan
-        uses: jfrog/frogbot@v2.23.6
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        with:
+          version: 'latest' # Specify the JFrog CLI version if needed
+
+      - name: Configure JFrog CLI
+        run: |
+          jf c add --url=$JF_URL --access-token=$JF_ACCESS_TOKEN --interactive=false
+
+      - name: Run SAST Scan
+        run: |
+          jf audit scan --sast
         env:
           JF_URL: ${{ secrets.JF_URL }}
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-          JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          JF_GIT_BASE_BRANCH: master
