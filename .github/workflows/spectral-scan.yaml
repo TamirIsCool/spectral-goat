@@ -18,7 +18,7 @@ jobs:
         env:
           JF_URL: ${{ secrets.JF_URL }}        
       - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v4
+        uses: jfrog/setup-jfrog-cli@v4.5.0
         with:
           version: 'latest'
           
