@@ -11,21 +11,28 @@ jobs:
   sast-scan:
     runs-on: ubuntu-latest
     steps:
+      # Checkout Code
       - name: Checkout Code
         uses: actions/checkout@v3
+      
+      # Debug JF_URL
       - name: Debug JF_URL
         run: echo "JF_URL=$JF_URL"
         env:
-          JF_URL: ${{ secrets.JF_URL }}        
+          JF_URL: ${{ secrets.JF_URL }} # Ensure JF_URL is set in GitHub Secrets
+      
+      # Setup JFrog CLI
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4.5.0
         with:
           version: 'latest'
-          
+      
+      # Run SAST Scan
       - name: Run SAST Scan
         run: |
+          jf c delete --all   # Clear existing configurations to avoid conflicts
           jf c add --url=$JF_URL --user sast --password=$JF_ACCESS_TOKEN --interactive=false
           jf audit scan --sast
         env:
-          JF_URL: ${{ secrets.JF_URL }}
-          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+          JF_URL: ${{ secrets.JF_URL }}           # Ensure the variable is passed here
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }} # Ensure this is a valid secret
