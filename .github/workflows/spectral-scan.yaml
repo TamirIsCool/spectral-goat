@@ -13,7 +13,10 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
+      - name: Debug JF_URL
+        run: echo "JF_URL=$JF_URL"
+        env:
+          JF_URL: ${{ secrets.JF_URL }}        
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
         with:
