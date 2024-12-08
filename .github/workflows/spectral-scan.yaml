@@ -24,7 +24,7 @@ jobs:
           
       - name: Run SAST Scan
         run: |
-          jf c add --url=$JF_URL --user sast --access-token=$JF_ACCESS_TOKEN --interactive=false
+          jf c add --url=$JF_URL --user sast --password=$JF_ACCESS_TOKEN --interactive=false
           jf audit scan --sast
         env:
           JF_URL: ${{ secrets.JF_URL }}
