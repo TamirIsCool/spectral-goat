@@ -12,6 +12,16 @@ env:
   JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
   
 jobs:
+  sonar:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0    
+    - name: SonarQube Scan
+      uses: sonarsource/sonarcloud-github-action@v4.0.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   spectral:
     runs-on: ubuntu-latest
     steps:
