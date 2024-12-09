@@ -16,11 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # - name: CloudGuard Code Security Scan
-      #   uses: checkpointsw/spectral-github-action@v4
-      #   with:
-      #     spectral-dsn: ${{ env.SPECTRAL_DSN }}
-      #     spectral-args: scan --fail-on-error --engines secrets,iac,oss --asset-mapping github.${{ github.repository_owner }}
+      - name: CloudGuard Code Security Scan
+        uses: checkpointsw/spectral-github-action@v4
+        with:
+          spectral-dsn: ${{ env.SPECTRAL_DSN }}
+          spectral-args: scan --fail-on-error --engines secrets,iac,oss --asset-mapping github.${{ github.repository_owner }}
   
   audit-code:
     runs-on: ubuntu-latest
