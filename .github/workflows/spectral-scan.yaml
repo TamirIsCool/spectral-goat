@@ -29,7 +29,7 @@ jobs:
       - uses: jfrog/setup-jfrog-cli@v4
       - run: |
           # Perform the scan and output results in JSON format
-          jf audit --iac --secrets --sast --format json | tee results.json
+          jf audit --iac --secrets --sast --format json --extended-table --debug | tee results.json
           # Display the results in the GitHub Actions log
           cat results.json
       # Upload the scan results as an artifact for later review
