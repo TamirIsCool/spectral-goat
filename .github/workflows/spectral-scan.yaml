@@ -39,6 +39,7 @@ jobs:
       - uses: jfrog/setup-jfrog-cli@v4
       - run: |
           # Perform the scan and output results in JSON format
+          export JFROG_CLI_LOG_LEVEL=DEBUG
           jf audit --iac --secrets --sast --format json --vuln true | tee results.json
           # Display the results in the GitHub Actions log
           cat results.json
