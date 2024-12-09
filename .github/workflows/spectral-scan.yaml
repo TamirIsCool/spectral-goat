@@ -28,8 +28,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: jfrog/setup-jfrog-cli@v4
       - run: |
-          # Perform the scan and output results in JSON
-          jf audit --iac --secrets --sast --format json --output results.json
+          # Perform the scan and output results in JSON format
+          jf audit --iac --secrets --sast --format json | tee results.json
           # Display the results in the GitHub Actions log
           cat results.json
       # Upload the scan results as an artifact for later review
